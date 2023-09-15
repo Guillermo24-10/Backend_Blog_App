@@ -1,5 +1,7 @@
 package com.sistema.blog.controllers;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +48,9 @@ public class AuthController {
 		JwtAuthResponse response = new JwtAuthResponse();
 		response.setToken(token);
 		response.setUsername(userDetails.getUsername());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String formattedDate = sdf.format(jwtTokenHelper.getExpirationDateFromToken(token));
+		response.setTokenExpiracion(formattedDate);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
